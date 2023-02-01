@@ -1,0 +1,48 @@
+# Example without password
+{
+    "clientId": "simple-kafka-ui",
+    "brokers": [
+        "localhost:9092"
+    ]
+}
+
+# Example if you are using confluent cloud
+{
+    "clientId": "simple-kafka-ui",
+    "brokers": [
+        "<your id>.us-central1.gcp.confluent.cloud:9092"
+    ],
+    "connectionTimeout": 5000,
+    "ssl": true,
+    "sasl": {
+        "mechanism": "plain",
+        "username": "your_username",
+        "password": "your password"
+    }
+}
+
+# Example Localhost with plain password
+{
+    "clientId": "simple-kafka-ui",
+    "brokers": ["localhost:9092"],
+    "connectionTimeout": 5000,
+    "sasl": {
+        "mechanism": "plain",
+        "username": "alice",
+        "password": "alice-secret"
+    }
+}
+
+# Example if using https://www.cloudkarafka.com/
+{
+  "clientId": "simple-kafka-ui",
+  "brokers": ["hello-01.srvs.cloudkafka.com:9094"],
+  "authenticationTimeout": 10000,
+  "reauthenticationThreshold": 10000,
+  "ssl": true,
+  "sasl": {
+    "mechanism": "scram-sha-256",
+    "username": "lpy10330",
+    "password": "M6_DV-bW9Qn7BzwDsFasAfeRBcBZVGAb"
+  }
+}
