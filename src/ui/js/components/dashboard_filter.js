@@ -85,7 +85,7 @@ export default {
                 const high = Number(offset.high)
                 const low = Number(offset.low)
                 const total = high - low
-                const limit = 5
+                const limit = 30
 
                 if (total == 0) return []
 
@@ -98,7 +98,7 @@ export default {
                 }
                 const pages = Math.ceil(total/limit)
                 for (let i = 1; i < pages + 1; i++) {
-                    if (i >= 10) break
+                    // if (i >= 10) break
                     let fromOffset = high - (i * limit)
                     let message = `${limit * i} messages`
                     if (i == pages) {

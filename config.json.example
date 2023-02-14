@@ -33,7 +33,7 @@
     }
 }
 
-# Example if using https://www.cloudkarafka.com/
+# Example if using cloudkarafka.com
 {
   "clientId": "simple-kafka-ui",
   "brokers": ["hello-01.srvs.cloudkafka.com:9094"],
