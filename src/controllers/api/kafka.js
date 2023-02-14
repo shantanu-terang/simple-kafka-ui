@@ -34,7 +34,7 @@ class KafkaController {
                 type: "topics"
             }))
         } catch (err) {
-            return res.status(500).json('success' in err ? err : { success: false, message: err, result: null, type: 'topics' })
+            return res.status(500).json(String(err).includes('success') ? err : { success: false, message: err, result: null, type: 'topics' })
         }
 
     }
@@ -46,7 +46,7 @@ class KafkaController {
                 topic: req.params.topic
             }))
         } catch (err) {
-            return res.status(500).json('success' in err ? err : { success: false, message: err, result: null, type: 'offsets' })
+            return res.status(500).json(String(err).includes('success') ? err : { success: false, message: err, result: null, type: 'offsets' })
         }
     }
 
@@ -58,7 +58,7 @@ class KafkaController {
                 config: req.body
             }))
         } catch (err) {
-            return res.status(500).json('success' in err ? err : { success: false, message: err, result: null, type: 'messages' })
+            return res.status(500).json(String(err).includes('success') ? err : { success: false, message: err, result: null, type: 'messages' })
         }
     }
 
@@ -70,7 +70,7 @@ class KafkaController {
                 data: req.body
             }))
         } catch (err) {
-            return res.status(500).json('success' in err ? err : { success: false, message: err, result: null, type: 'produce' })
+            return res.status(500).json(String(err).includes('success') ? err : { success: false, message: err, result: null, type: 'produce' })
         }
     }
 
@@ -81,7 +81,7 @@ class KafkaController {
                 data: req.body
             }))
         } catch (err) {
-            return res.status(500).json('success' in err ? err : { success: false, message: err, result: null, type: 'createTopic' })
+            return res.status(500).json(String(err).includes('success') ? err : { success: false, message: err, result: null, type: 'createTopic' })
         }
     }
 
@@ -92,7 +92,7 @@ class KafkaController {
                 topic: req.params.topic
             }))
         } catch (err) {
-            return res.status(500).json('success' in err ? err : { success: false, message: err, result: null, type: 'topicDetails' })
+            return res.status(500).json(String(err).includes('success') ? err : { success: false, message: err, result: null, type: 'topicDetails' })
         }
     }
 }

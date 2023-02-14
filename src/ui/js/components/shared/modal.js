@@ -6,6 +6,10 @@ export default {
         title: {
             type: String,
             required: true
+        },
+        lg: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -34,7 +38,7 @@ export default {
     },
     template: `
         <div class="modal fade" ref="modal" tabindex="-2"  aria-hidden="true">
-            <div class="modal-dialog">
+            <div :class="{'modal-dialog': true, 'modal-xl': lg}">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5">{{ title }}</h1>

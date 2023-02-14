@@ -20,6 +20,7 @@
     "kafkajs": "^2.2.3",
     "moment-timezone": "^0.5.40",
     "socket.io": "^4.5.4",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-json-pretty": "^2.2.3"
   }
 }

@@ -7,14 +7,20 @@ import DashboardHeading from '/ui/js/components/dashboard_heading.js'
 import DashboardFilter from '/ui/js/components/dashboard_filter.js'
 import Socket from '/ui/js/socket.js'
 import Loading from '/ui/js/components/shared/loading.js'
+import Modal from '/ui/js/components/shared/modal.js'
+// import { VueJsonPretty } from '/npm/vue-json-pretty/lib/vue-json-pretty.js';
+// import VueJsonPretty from 'vue-json-pretty';
+
 
 createApp({
     components: {
+        // VueJsonPretty,
         Header,
         Sidebar,
         DashboardHeading,
         DashboardFilter,
         Loading,
+        Modal
     },
     emits: ['topic', 'loadMessages', 'reloadTopic', 'newMessage'],
     data() {
@@ -29,6 +35,11 @@ createApp({
                 title: "Info",
                 message: "",
                 type: "error" // success info
+            },
+            selectedMessage: null,
+            showMsgPreview: true,
+            messageFilter: {
+                f1: '', f2: '', f3: ''
             }
         }
     },
@@ -66,7 +77,10 @@ createApp({
             toast.show()
         },
         gotNewMessage(message) {
-            this.messages.splice(0, 0, message)
+            // check if offset is in message
+            if (!this.messages.some(msg => msg.offset == message.offset)) {
+                this.messages.splice(0, 0, message)
+            }
         },
         reloadTopic() {
             this.loadOffsets()
@@ -92,6 +106,102 @@ createApp({
             this.messages = messages.data.result
             this.isLoadingMessages = false
         },
+
+        viewJson(message) {
+            // console.log(message)
+            this.showMsgPreview = false
+            this.selectedMessage = { ...message }
+            this.selectedMessage['raw_message'] = JSON.stringify(JSON.parse(message.message), null, 4)
+            this.selectedMessage.message = this.jsonViewer(JSON.parse(message.message), false)
+            this.$refs.modal.open()
+        },
+        jsonViewer(json, collapsible=false) {
+            const TEMPLATES = {
+                item: '<div class="json__item"><div class="json__key">%KEY%</div><div class="json__value json__value--%TYPE%">%VALUE%</div></div>',
+                itemCollapsible: '<label class="json__item json__item--collapsible"><input type="checkbox" class="json__toggle"/><div class="json__key">%KEY%</div><div class="json__value json__value--type-%TYPE%">%VALUE%</div>%CHILDREN%</label>',
+                itemCollapsibleOpen: '<label class="json__item json__item--collapsible"><input type="checkbox" checked class="json__toggle"/><div class="json__key">%KEY%</div><div class="json__value json__value--type-%TYPE%">%VALUE%</div>%CHILDREN%</label>'
+            }
+        
+            function createItem(key, value, type){
+                var element = TEMPLATES.item.replace('%KEY%', key);
+        
+                if(type == 'string') {
+                    element = element.replace('%VALUE%', '"' + value + '"');
+                } else {
+                    element = element.replace('%VALUE%', value);
+                }
+        
+                element = element.replace('%TYPE%', type);
+        
+                return element;
+            }
+        
+            function createCollapsibleItem(key, value, type, children){
+                var tpl = 'itemCollapsible';
+                
+                if(collapsible) {
+                    tpl = 'itemCollapsibleOpen';
+                }
+                
+                var element = TEMPLATES[tpl].replace('%KEY%', key);
+        
+                element = element.replace('%VALUE%', type);
+                element = element.replace('%TYPE%', type);
+                element = element.replace('%CHILDREN%', children);
+        
+                return element;
+            }
+        
+            function handleChildren(key, value, type) {
+                var html = '';
+        
+                for(var item in value) { 
+                    var _key = item,
+                        _val = value[item];
+        
+                    html += handleItem(_key, _val);
+                }
+        
+                return createCollapsibleItem(key, value, type, html);
+            }
+        
+            function handleItem(key, value) {
+                var type = value == null ? null : Array.isArray(value) ? `Array(${value.length})` : typeof value;
+        
+                if(typeof value === 'object') {        
+                    return handleChildren(key, value, `${type}`);
+                }
+        
+                return createItem(key, value, type);
+            }
+        
+            function parseObject(obj) {
+                let _result = '<div class="json">';
+        
+                for(var item in obj) { 
+                    var key = item,
+                        value = obj[item];
+        
+                    _result += handleItem(key, value);
+                }
+        
+                _result += '</div>';
+        
+                return _result;
+            }
+            
+            return parseObject(json);
+        }
+        
+        
+    },
+    computed: {
+        filteredMessages() {
+            return this.messages
+                .filter(msg => msg.message.toLowerCase().includes(this.messageFilter.f1.toLowerCase()))
+                .filter(msg => msg.message.toLowerCase().includes(this.messageFilter.f2.toLowerCase()))
+                .filter(msg => msg.message.toLowerCase().includes(this.messageFilter.f3.toLowerCase()))
+        }
     },
     created() {
         Socket.connect()
@@ -132,22 +242,51 @@ createApp({
                     <hr v-if="topicName.length"/>
                     <Loading v-if="isLoadingMessages"/>
                     <div v-if="!isLoadingMessages && offsets.length && topicName.length && messages.length" class="table-responsive">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Filter 1:</span>
+                            <input type="text" class="form-control" v-model="messageFilter.f1" placeholder='"action":"create"' aria-label="Username">
+                            <span class="input-group-text">Filter 2:</span>
+                            <input type="text" class="form-control" v-model="messageFilter.f2" placeholder='"id":"124"' aria-label="Server">
+                            <span class="input-group-text">Filter 3:</span>
+                            <input type="text" class="form-control" v-model="messageFilter.f3" placeholder='"success":true' aria-label="Server">
+                        </div>
                         <table class="table table-striped table-sm">
                             <thead>
                                 <tr>
-                                    <th style="width: 150px;" scope="col">Time</th>
+                                    <th style="width: 150px;" scope="col">Offset</th>
+                                    <th style="width: 200px;" scope="col">Timestamp</th>
                                     <th scope="col">message</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(message, index) in messages" :key="index">
-                                    <td style="width: 150px;" scope="col">{{ message.from_now }}</td>
+                                <tr v-for="(message, index) in filteredMessages" :key="index">
+                                    <td style="width: 150px;" scope="col">
+                                    <strong>#{{ message.offset }}</strong>
+                                    <br/>
+                                    <button type="button" class="btn btn-primary btn-sm" v-on:click="viewJson(message)">View</button>
+                                </td>
+                                    <td style="width: 200px;" scope="col">{{ message.timestamp }}</td>
                                     <td scope="col">{{ message.message }}</td>
                                 </tr>
 
                             </tbody>
                         </table>
                     </div>
+                    <Modal ref="modal" :lg="true" :title="'View Message #' + selectedMessage?.offset??''" @submit.prevent>
+                        <template v-slot:body>
+                            <button type="button" v-on:click="showMsgPreview = !showMsgPreview" class="btn btn-info btn-sm">Toggle <span v-if="showMsgPreview">Raw</span><span v-else>Preview</span> JSON</button>
+                            <template v-if="showMsgPreview">
+                                <code v-html="selectedMessage?.message??''">...</code>
+                            </template>
+                            <template v-else>
+                                <textarea class="form-control mt-2" style="height: 600px">{{selectedMessage?.raw_message??''}}</textarea>
+                            </template>
+                        </template>
+                        <template v-slot:footer>
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                        </template>
+                    </Modal>
                 </main>
             </div>
         </div>
