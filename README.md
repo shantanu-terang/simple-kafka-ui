@@ -1,66 +1,36 @@
-# simple-kafka-ui
-Simple Kafka UI for local development
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# Start the server by running
+## Getting Started
+
+First, run the development server:
+
 ```bash
-docker run -p3000:3000 -v$(pwd)/kafka.json:/app/config.json shantanuterang/simple-kafka-ui
-
-# open http://localhost:3000
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-# Example without password
-```JSON
-{
-    "clientId": "simple-kafka-ui",
-    "brokers": [
-        "localhost:9092"
-    ]
-}
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# Example if you are using confluent cloud
-```JSON
-{
-    "clientId": "simple-kafka-ui",
-    "brokers": [
-        "<your id>.us-central1.gcp.confluent.cloud:9092"
-    ],
-    "connectionTimeout": 5000,
-    "ssl": true,
-    "sasl": {
-        "mechanism": "plain",
-        "username": "your_username",
-        "password": "your password"
-    }
-}
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-# Example Localhost with plain password
-```JSON
-{
-    "clientId": "simple-kafka-ui",
-    "brokers": ["localhost:9092"],
-    "connectionTimeout": 5000,
-    "sasl": {
-        "mechanism": "plain",
-        "username": "alice",
-        "password": "alice-secret"
-    }
-}
-```
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-# Example if using https://www.cloudkarafka.com/
-```JSON
-{
-  "clientId": "simple-kafka-ui",
-  "brokers": ["hello-01.srvs.cloudkafka.com:9094"],
-  "authenticationTimeout": 10000,
-  "reauthenticationThreshold": 10000,
-  "ssl": true,
-  "sasl": {
-    "mechanism": "scram-sha-256",
-    "username": "lpy10330",
-    "password": "M6_DV-bW9Qn7BzwDsFasAfeRBcBZVGAb"
-  }
-}
-```
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
