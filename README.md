@@ -149,4 +149,6 @@ To contribute:
 ---
 
 ## 📜 License
-MIT License – free to use, modify, and distribute.
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
+
+This software is released into the public domain. Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software without any restrictions or requirements.
