@@ -118,7 +118,7 @@ docker compose -f docker-compose.dev.yml up
 <details>
 <summary>🌙 <strong>Dark Mode</strong> - Perfect for late-night debugging sessions</summary>
 
-![Dark Mode Screenshot](screenshots/dark-mode.png)
+![Dark Mode Screenshot](screenshots/Selection_dark.png)
 
 *Clean, modern interface with syntax highlighting and real-time updates*
 
@@ -127,7 +127,7 @@ docker compose -f docker-compose.dev.yml up
 <details>
 <summary>☀️ <strong>Light Mode</strong> - Easy on the eyes for daytime development</summary>
 
-![Light Mode Screenshot](screenshots/light-mode.png)
+![Light Mode Screenshot](screenshots/Selection_light.png)
 
 *Crisp, professional look with excellent readability*
 
