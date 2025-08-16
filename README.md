@@ -17,6 +17,15 @@ Easily manage your Kafka topics, messages, and streams with an intuitive interfa
 
 ---
 
+## 🖼️ Screenshots
+
+### Dark Mode
+![Dark Mode Screenshot](./screenshots/Selection_dark.png)
+
+### Dark Light
+![Light Mode Screenshot](./screenshots/Selection_light.png)
+
+
 ## 🛠️ Tech Stack
 
 **Backend**  
