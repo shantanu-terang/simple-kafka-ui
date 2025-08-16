@@ -17,31 +17,6 @@ Easily manage your Kafka topics, messages, and streams with an intuitive interfa
 
 ---
 
-## 🖼️ Screenshots
-
-### Dark Mode
-![Dark Mode Screenshot](./screenshots/Selection_dark.png)
-
-### Dark Light
-![Light Mode Screenshot](./screenshots/Selection_light.png)
-
-
-## 🛠️ Tech Stack
-
-**Backend**  
-- [Express.js](https://expressjs.com/)  
-- [KafkaJS](https://kafka.js.org/)  
-- [Socket.IO](https://socket.io/)  
-
-**Frontend**  
-- [Vite](https://vitejs.dev/) + [React (TypeScript)](https://react.dev/)  
-- [Zustand](https://github.com/pmndrs/zustand)  
-- [Socket.IO Client](https://socket.io/docs/v4/client-api/)  
-
-**Deployment**  
-- Docker & Docker Compose  
-
----
 
 ## 🚀 Getting Started
 
@@ -65,6 +40,32 @@ Open [http://localhost:3000](http://localhost:3000) in your browser. 🎉
 or 
 
 Open [http://localhost:5173](http://localhost:5173) for development version.
+
+---
+
+## 🖼️ Screenshots
+
+### Dark Mode
+![Dark Mode Screenshot](./screenshots/Selection_dark.png)
+
+### Light Mode
+![Light Mode Screenshot](./screenshots/Selection_light.png)
+
+
+## 🛠️ Tech Stack
+
+**Backend**  
+- [Express.js](https://expressjs.com/)  
+- [KafkaJS](https://kafka.js.org/)  
+- [Socket.IO](https://socket.io/)  
+
+**Frontend**  
+- [Vite](https://vitejs.dev/) + [React (TypeScript)](https://react.dev/)  
+- [Zustand](https://github.com/pmndrs/zustand)  
+- [Socket.IO Client](https://socket.io/docs/v4/client-api/)  
+
+**Deployment**  
+- Docker & Docker Compose  
 
 
 ---
