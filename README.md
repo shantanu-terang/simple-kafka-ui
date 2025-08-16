@@ -1,56 +1,105 @@
-# simple-kafka-ui
-Simple Kafka UI for local development
+# 🚀 Simple Kafka UI
 
-# Start the server by running
+A modern, lightweight **Kafka UI for local development**.  
+Easily manage your Kafka topics, messages, and streams with an intuitive interface.  
+
+---
+
+## ✨ Features
+
+- 🔧 **Topic Management** – create and list topics  
+- 📜 **Message Explorer** – list and filter/search messages  
+- 📡 **Realtime Streaming** – enable realtime updates for live data inspection  
+- ✍️ **Produce Messages** – publish new messages directly from the UI  
+- 🔁 **Resend Messages** – quickly resend messages to topics  
+- 🎨 **Theme Support** – light/dark mode toggle  
+- 🐳 **Dockerized** – simple setup with Docker & Docker Compose  
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend**  
+- [Express.js](https://expressjs.com/)  
+- [KafkaJS](https://kafka.js.org/)  
+- [Socket.IO](https://socket.io/)  
+
+**Frontend**  
+- [Vite](https://vitejs.dev/) + [React (TypeScript)](https://react.dev/)  
+- [Zustand](https://github.com/pmndrs/zustand)  
+- [Socket.IO Client](https://socket.io/docs/v4/client-api/)  
+
+**Deployment**  
+- Docker & Docker Compose  
+
+---
+
+## 🚀 Getting Started
+
+📦 Docker Hub: [shantanuterang/simple-kafka-ui](https://hub.docker.com/r/shantanuterang/simple-kafka-ui)
+
+### Run with Docker Compose
+You can also check the [docker-compose.yml](./docker-compose.yml) file in the root of this repository.
+
+
 ```bash
-docker run -p3000:3000 -v$(pwd)/kafka.json:/app/config.json shantanuterang/simple-kafka-ui
+docker compose up
 
-# open http://localhost:3000
+# or
+
+docker compose -f docker-compose.dev.yml up 
+
 ```
 
-# Example without password
-```JSON
+Open [http://localhost:3000](http://localhost:3000) in your browser. 🎉
+
+or 
+
+Open [http://localhost:5173](http://localhost:5173) for development version.
+---
+
+## ⚙️ Example Configurations
+
+### Localhost (no password)
+```json
 {
-    "clientId": "simple-kafka-ui",
-    "brokers": [
-        "localhost:9092"
-    ]
+  "clientId": "simple-kafka-ui",
+  "brokers": ["kafka:9092", "localhost:29092"],
+  "connectionTimeout": 5000
 }
 ```
 
-# Example if you are using confluent cloud
-```JSON
+### Localhost with Plain Password
+```json
 {
-    "clientId": "simple-kafka-ui",
-    "brokers": [
-        "<your id>.us-central1.gcp.confluent.cloud:9092"
-    ],
-    "connectionTimeout": 5000,
-    "ssl": true,
-    "sasl": {
-        "mechanism": "plain",
-        "username": "your_username",
-        "password": "your password"
-    }
+  "clientId": "simple-kafka-ui",
+  "brokers": ["localhost:9092"],
+  "connectionTimeout": 5000,
+  "sasl": {
+    "mechanism": "plain",
+    "username": "alice",
+    "password": "alice-secret"
+  }
 }
 ```
 
-# Example Localhost with plain password
-```JSON
+### Confluent Cloud
+```json
 {
-    "clientId": "simple-kafka-ui",
-    "brokers": ["localhost:9092"],
-    "connectionTimeout": 5000,
-    "sasl": {
-        "mechanism": "plain",
-        "username": "alice",
-        "password": "alice-secret"
-    }
+  "clientId": "simple-kafka-ui",
+  "brokers": ["<your-id>.us-central1.gcp.confluent.cloud:9092"],
+  "connectionTimeout": 5000,
+  "ssl": true,
+  "sasl": {
+    "mechanism": "plain",
+    "username": "your_username",
+    "password": "your_password"
+  }
 }
 ```
 
-# Example if using https://www.cloudkarafka.com/
-```JSON
+### CloudKarafka
+```json
 {
   "clientId": "simple-kafka-ui",
   "brokers": ["hello-01.srvs.cloudkafka.com:9094"],
@@ -64,3 +113,28 @@ docker run -p3000:3000 -v$(pwd)/kafka.json:/app/config.json shantanuterang/simpl
   }
 }
 ```
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! 🎉  
+Feel free to check the [issues page](../../issues) or open a pull request.
+
+To contribute:
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/awesome-feature`)
+3. Commit your changes (`git commit -m 'Add awesome feature'`)
+4. Push to the branch (`git push origin feature/awesome-feature`)
+5. Open a Pull Request
+
+---
+
+## 📌 Notes
+- This project is built for **local development purposes** (not production).  
+- Requires a running Kafka cluster (local or cloud).  
+
+---
+
+## 📜 License
+MIT License – free to use, modify, and distribute.
