@@ -51,7 +51,7 @@ export function MessagesTable({ messages, expandedRows, onToggleExpand, loading,
                         <button className="btn btn--primary btn--sm" style={{ height: 50 }} onClick={onLoadMessages}
                             disabled={!currentTopic?.isLoaded || currentTopic?.isLoading}
                         >
-                            <i className="fas fa-sync-alt" style={{ marginRight: 10, marginTop: 20, fontSize: 30 }}></i> Load/Re-Load
+                            <i className="fas fa-sync-alt" style={{ marginRight: 10, marginTop: 20, fontSize: 30 }}></i> Load Messages
                         </button>
                     </div>
                 </div>
